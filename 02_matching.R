@@ -6,7 +6,7 @@ library(data.table)
 rm(list = ls())
 
 # read data
-rawdata = fread("./output/df_sample.tsv", sep = "\t", encoding = "UTF-8", header = T) 
+df_sample = fread("./output/df_sample.tsv", sep = "\t", encoding = "UTF-8", header = T) 
 
 # 追加加工
 df_output = df_sample %>% 
@@ -31,9 +31,9 @@ for (i in 1:nrow(df_output)) {
 }
 
 # 全データOutput
-write.table(df_output, "./output/df_output.tsv", col.names = F, sep = "\t")
+write.table(df_output, "./output/df_output.tsv", row.names = F, col.names = T, sep = "\t")
 
 # TargetデータOutput
 df_output %>%
   filter(tar_flg == 1) %>% 
-  write.table("./output/df_sub.tsv", col.names = F, sep = "\t")
+  write.table("./output/df_sub.tsv", row.names = F, col.names = T, sep = "\t")
