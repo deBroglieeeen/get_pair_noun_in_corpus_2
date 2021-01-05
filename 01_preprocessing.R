@@ -60,5 +60,5 @@ for (j in 1:nrow(rawdata)) {
   df_sample = df_sample %>% bind_rows(df_tmp)
 }
 
-write.table(df_sample, "./output/df_sample.tsv", row.names = F, col.names = T, sep = "\t")
+write.table(df_sample, "./output/df_sample_place_verb.tsv", row.names = F, col.names = T, sep = "\t")
 

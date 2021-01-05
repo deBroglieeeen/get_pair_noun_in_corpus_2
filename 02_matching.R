@@ -6,11 +6,14 @@ library(data.table)
 rm(list = ls())
 
 # read data
-df_sample = fread("./output/df_sample.tsv", sep = "\t", encoding = "UTF-8", header = T) 
+df_sample = fread("./output/df_sample_place_verb.tsv", sep = "\t", encoding = "UTF-8", header = T) 
 
 # 追加加工
 df_output = df_sample %>% 
-  mutate(tar_flg = ifelse(tag == "adp" & value == "တွင်" |
+  #mutate(tar_flg = ifelse(tag == "adp" & value == "တွင်" |
+  #                        tag == "adp" & value == "မှာ"|
+  #                        tag == "adp" & value == "၌", 1, 0)) %>% 
+  mutate(tar_flg = ifelse(tag == "adp" & value == "တွင" | 
                           tag == "adp" & value == "မှာ"|
                           tag == "adp" & value == "၌", 1, 0)) %>% 
   mutate(tag_pair = NA) %>% 
@@ -18,7 +21,10 @@ df_output = df_sample %>%
   mutate(order_pair = NA)
 
 for (i in 1:nrow(df_output)) {
-  if (df_output$tag[i] == "noun") {
+  # count
+  print(paste0("loop : ", i))
+  #if (df_output$tag[i] == "noun") {
+  if (df_output$tag[i] == "verb") {
     tag_tmp = df_output$tag[i]
     value_tmp = df_output$value[i]
     order_tmp = df_output$order[i]
@@ -31,9 +37,12 @@ for (i in 1:nrow(df_output)) {
 }
 
 # 全データOutput
-write.table(df_output, "./output/df_output.tsv", row.names = F, col.names = T, sep = "\t")
+write.table(df_output, "./output/df_output_place_verb.tsv", row.names = F, col.names = T, sep = "\t")
 
 # TargetデータOutput
-df_output %>%
-  filter(tar_flg == 1) %>% 
-  write.table("./output/df_sub.tsv", row.names = F, col.names = T, sep = "\t")
+#df_output %>%
+ # filter(tar_flg == 1) %>% 
+  #write.table("./output/df_sub.tsv", row.names = F, col.names = T, sep = "\t")
+
+df_sub = df_output %>%
+  filter(tar_flg == 1)
