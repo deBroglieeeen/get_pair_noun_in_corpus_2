@@ -23,8 +23,8 @@ df_output = df_sample %>%
 for (i in 1:nrow(df_output)) {
   # count
   print(paste0("loop : ", i))
-  #if (df_output$tag[i] == "noun") {
-  if (df_output$tag[i] == "verb") {
+  if (df_output$tag[i] == "noun") {
+  #if (df_output$tag[i] == "verb") {
     tag_tmp = df_output$tag[i]
     value_tmp = df_output$value[i]
     order_tmp = df_output$order[i]
