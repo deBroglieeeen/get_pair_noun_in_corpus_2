@@ -20,8 +20,8 @@ def simplifiedTree(text):
   #modified = re.sub(r'([U+1000–U+109F]+)',r"'\1'",modified)
   #modified = re.sub(r"(u'Myanmar'+)",r"'\1",modified)
 
-  # 英文を全て削除したが本文にも英文が残っているので微妙かも
-  # ただ、アルファベットのついてる英文の頻度はめちゃ少ないはずなのでまあ良いか。
+  # 英文を全て削除したが本文にも英文が残っているので注意
+  # ただ、アルファベットのついてる英文の頻度は少ないので今回は無視する
   modified = re.sub(r"([^0-9'[,.a-zA-Z\]()\s]+)",r"'\1'",modified)
   print(modified)
   print(eval(modified))
