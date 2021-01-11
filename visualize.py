@@ -9,6 +9,10 @@ hnai = data[data["value"] == "၌"]
 dwin = data[data["value"] == "တွင်"]
 hma = data[data["value"] == "မှာ"]
 
+hnai.to_csv('output/hnai_output.csv')
+dwin.to_csv('output/dwin_output.csv')
+hma.to_csv('output/hma_output.csv')
+
 # print(dwin.head())
 # print(hma.head())
 #table = data.loc[data["value"] == "၌" | data["value"] == "တွင်",data["value_pair"] == "မြို့" | data["value_pair"] == "ဆေးရုံ" ]
