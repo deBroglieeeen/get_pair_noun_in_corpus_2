@@ -13,7 +13,7 @@ df_output = df_sample %>%
   #mutate(tar_flg = ifelse(tag == "adp" & value == "တွင်" |
   #                        tag == "adp" & value == "မှာ"|
   #                        tag == "adp" & value == "၌", 1, 0)) %>%
-  mutate(tar_flg = ifelse(tag == "adp" & value == "တွင" |
+  mutate(tar_flg = ifelse(tag == "adp" & value == "တွင်" |
                           tag == "adp" & value == "မှာ"|
                           tag == "adp" & value == "၌", 1, 0)) %>%
   mutate(tag_pair = NA) %>%
