@@ -1,6 +1,6 @@
 import re
 import unicodedata
-#text = input()
+text = input()
 #text = open("/Users/munekiyonaoto/Downloads/data.txt").read()
 
 def simplifiedTree(text):
@@ -35,12 +35,13 @@ def removeAllTag(text):
   while("" in word_list) :
     word_list.remove("")
   return word_list
-text = open("ALTCorpus.txt").read()
+#text = open("ALTCorpus.txt").read()
 #print(text)
-
+sentence = ""
+# for word in removeAllTag(text):
+#   sentence.append(word)
+print(sentence.join(removeAllTag(text)))
 isPlace = False
-# for w in word_list :
-#   if w == "မှာ" | w == "တွင်" | w == "":
-simplifiedTree(text)
-#print(word_list)
-#print(unicodedata.name('တ'))
+
+#simplifiedTree(text)
+
