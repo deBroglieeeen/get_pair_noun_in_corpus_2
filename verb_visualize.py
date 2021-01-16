@@ -16,6 +16,11 @@ hma.to_csv('output/hma_verb.csv')
 hnai.head(15).to_csv('output/hnai_verb_head.csv')
 dwin.head(15).to_csv('output/dwin_verb_head.csv')
 hma.head(15).to_csv('output/hma_verb_head.csv')
+marged = pd.concat([hnai,dwin,hma],axis = 0)
+pivot_verb = pd.pivot_table(marged, index = "value_pair",columns = "value")
+#pivot_verb = pivot_verb.sort_values(["တွင်","၌"],axis=0, ascending = (False,True) )
+
+pivot_verb.to_csv('output/pivot_verb.csv')
 # print(dwin.head())
 # print(hma.head())
 #table = data.loc[data["value"] == "၌" | data["value"] == "တွင်",data["value_pair"] == "မြို့" | data["value_pair"] == "ဆေးရုံ" ]

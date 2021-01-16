@@ -16,6 +16,11 @@ hma.to_csv('output/hma_output.csv')
 hnai.head(15).to_csv('output/hnai_output_head.csv')
 dwin.head(15).to_csv('output/dwin_output_head.csv')
 hma.head(15).to_csv('output/hma_output_head.csv')
+
+marged = pd.concat([hnai,dwin,hma],axis = 0)
+#marged = pd.concat([hnai[hnai["count"] > 10], dwin[dwin["count"] > 10], hma[hma["count"] > 10]],axis = 0)
+pivot_head = pd.pivot_table(marged, index = "value_pair",columns = "value")
+pivot_head.to_csv('output/pivot_output_all.csv')
 # print(dwin.head())
 # print(hma.head())
 #table = data.loc[data["value"] == "၌" | data["value"] == "တွင်",data["value_pair"] == "မြို့" | data["value_pair"] == "ဆေးရုံ" ]
