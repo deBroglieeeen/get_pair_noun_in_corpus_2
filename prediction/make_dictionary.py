@@ -1,6 +1,6 @@
 import csv
 
-def main():
+def build_dictionary():
     # tsv読み込み
     with open('../output/df_output_analize.tsv')as f:
         tsv_reader = csv.reader(f, delimiter='\t')
@@ -21,7 +21,8 @@ def main():
 
     return word2token, token2word
 
+def main():
+    word2token, token2word = build_dictionary()
 
 if __name__ == '__main__':
     main()
-
