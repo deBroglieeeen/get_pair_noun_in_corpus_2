@@ -1,6 +1,7 @@
 import re
 import unicodedata
-text = input()
+#text = input()
+text = open("tmp.txt").read()
 #text = open("/Users/munekiyonaoto/Downloads/data.txt").read()
 
 def simplifiedTree(text):
