@@ -14,6 +14,20 @@ from model import Model
 
 device = torch.device('cpu')
 
+def split_data():
+    word2token, token2word = build_dictionary()
+    input_data, label_data = load_data(word2token)
+    dataset = MyDataset(input_data, label_data)
+  
+    # データセット分割
+    n_samples = len(dataset)
+    val_size = int(n_samples*0.1)
+    train_size = n_samples - val_size
+    train_dataset, val_dataset = random_split(dataset, [train_size, val_size], generator=torch.Generator().manual_seed(1))
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+    return train_dataset, val_dataset, train_loader, val_loader
+
 # モデル評価
 def eval_net(model, data_loader, loss, device):
     model.eval()
@@ -129,18 +143,7 @@ def select_epoch(valid_losses):
     return valid_losses.index(min_loss) + 1
 
 def main():
-    word2token, token2word = build_dictionary()
-    input_data, label_data = load_data(word2token)
-    dataset = MyDataset(input_data, label_data)
-  
-    # データセット分割
-    n_samples = len(dataset)
-    val_size = int(n_samples*0.1)
-    train_size = n_samples - val_size
-    train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
-    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
-
+    _, _, train_loader, val_loader = split_data()
     model = Model()
     loss = nn.CrossEntropyLoss()
     print("訓練開始")
