@@ -21,11 +21,11 @@ def split_data():
   
     # データセット分割
     n_samples = len(dataset)
-    val_size = int(n_samples*0.1)
+    val_size = int(n_samples*0.3)
     train_size = n_samples - val_size
-    train_dataset, val_dataset = random_split(dataset, [train_size, val_size], generator=torch.Generator().manual_seed(1))
-    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+    train_dataset, val_dataset = random_split(dataset, [train_size, val_size], generator=torch.Generator().manual_seed(3))
+    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=128, shuffle=True)
     return train_dataset, val_dataset, train_loader, val_loader
 
 # モデル評価
@@ -33,7 +33,6 @@ def eval_net(model, data_loader, loss, device):
     model.eval()
     model = model.to(device)
     outputs = []
-    accs = []
     for i, (input_feature, label) in enumerate(data_loader):
         with torch.no_grad():
             # GPU setting
@@ -42,31 +41,21 @@ def eval_net(model, data_loader, loss, device):
     
         # モデルの推測
         pred = model(input_feature)
-        # シグモイドで0-1に正規化
-        m = nn.Sigmoid()
         # 交差エントロピー
-        pred = torch.squeeze(m(pred))
         output = loss(pred, label)
+        outputs.append(output.item())
         
         # 最大値のインデックスを取得
         _, idx = torch.max(pred, 1)
-        
-        # tensorからnumpyに変換
-        idx = idx.to('cpu').detach().numpy().copy()
-        label = label.to('cpu').detach().numpy().copy()
-        # 精度計算
-        acc = (idx == label).sum() / len(label)            
-        accs.append(acc)
 
-    return sum(outputs) / i , sum(accs)/i
+    return sum(outputs) / i 
     
 
 # モデルの学習
 def train_net(model, train_loader, valid_loader, loss, n_iter, device):
     train_losses = []
     valid_losses = []
-    train_accs = []
-    val_accs = []
+
     optimizer = optim.Adam(model.parameters())
     optimizer.zero_grad()
     for epoch in range(n_iter):
@@ -74,7 +63,6 @@ def train_net(model, train_loader, valid_loader, loss, n_iter, device):
         model = model.to(device)
         # ネットワーク訓練モード
         model.train()
-        accs = []
         for i, (input_feature, label) in enumerate(train_loader):        
             # GPU setting
             input_feature = input_feature.to(device)
@@ -82,25 +70,14 @@ def train_net(model, train_loader, valid_loader, loss, n_iter, device):
 
             # モデルの推測
             pred = model(input_feature)
-            # シグモイドで0-1に正規化
-            m = nn.Sigmoid()
             # 交差エントロピー
-            pred = torch.squeeze(m(pred))
             output = loss(pred, label)
-         
             # 最大値のインデックスを取得
             _, idx = torch.max(pred, 1)
-            
-            # tensorからnumpyに変換
-            idx = idx.to('cpu').detach().numpy().copy()
-            label = label.to('cpu').detach().numpy().copy()
-            print(idx)
-            print(label)
-            # 精度計算
-            acc = (idx == label).sum() / len(label)            
-            accs.append(acc)
-            
-   
+
+            # print(idx)
+            # print(label)
+
             optimizer.zero_grad()
             output.backward()
             optimizer.step()
@@ -109,14 +86,12 @@ def train_net(model, train_loader, valid_loader, loss, n_iter, device):
         # 訓練用データでのloss値
         train_losses.append(running_loss / i)
         # 検証用データでのloss値
-        pred_valid, val_acc =  eval_net(model, valid_loader, loss, device)
-        train_accs.append(sum(accs)/i)
-        val_accs.append(val_acc)
+        pred_valid=  eval_net(model, valid_loader, loss, device)
         valid_losses.append(pred_valid)
-        print('epoch:' +  str(epoch+1), 'train loss:'+ str(train_losses[-1]), 'valid loss:' + str(valid_losses[-1]), 'train acc:' + str(train_accs[-1]),  'val acc:' + str(val_accs[-1]), flush=True)
+        print('epoch:' +  str(epoch+1), 'train loss:'+ str(train_losses[-1]), 'valid loss:' + str(valid_losses[-1]), flush=True)
 
         # 学習モデル保存
-        if (epoch+1)%1==0:
+        if (epoch+1)%100==0:
             # 学習させたモデルの保存パス
             model_path =  f'model/epoch{epoch+1}.pth'
             # モデル保存
@@ -154,7 +129,7 @@ def main():
                                            train_loader=train_loader, 
                                            valid_loader=val_loader,  
                                            loss=loss, 
-                                           n_iter=10, 
+                                           n_iter=1000, 
                                            device=device)
     best_epoch = select_epoch(valid_losses)
     print(f'{best_epoch}epochのモデルが最もvalid lossが下がった。')

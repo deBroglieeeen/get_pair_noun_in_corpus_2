@@ -14,7 +14,7 @@ device = torch.device('cpu')
 def load_model():
     # 学習済みモデル読み込み
     model = Model()
-    model.load_state_dict(torch.load('model/epoch2.pth', map_location=device))
+    model.load_state_dict(torch.load('model/epoch800.pth', map_location=device))
     return model
 
 def load_testdata():
@@ -28,16 +28,13 @@ def eval(model, test_loader, device):
     for i, (input_feature, label) in enumerate(test_loader):
         with torch.no_grad():
             # GPU setting
+            print(input_feature)
             input_feature = input_feature.to(device)
             label = label.to(device)
     
         # モデルの推測
         pred = model(input_feature)
-        # シグモイドで0-1に正規化
-        m = nn.Sigmoid()
-
-        # 交差エントロピー
-        pred = torch.squeeze(m(pred))
+        print('それぞれの確率値:', pred)
         
         # 最大値のインデックスを取得
         _, idx = torch.max(pred, 1)
@@ -60,7 +57,7 @@ def main():
     # データロード
     _, val_dataset, _, _ = split_data()
     print('テスト用データ数:', len(val_dataset))
-    val_loader = DataLoader(val_dataset, batch_size=1000, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=3000, shuffle=False)
     # モデルロード
     model = load_model()
     # 予測ラベルと真のラベル

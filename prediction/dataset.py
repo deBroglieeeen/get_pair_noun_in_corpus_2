@@ -13,9 +13,10 @@ def load_data(word2token):
         label_data = []
         input_data = []
         for i, row in enumerate(reader):
+            # ヘッダースキップ
             if i == 0:
                 continue
-            
+
             # ラベル付与
             if row[0] == '၌':
                 label = 0
@@ -40,7 +41,6 @@ def load_data(word2token):
             # 共起カウント
             cnt = int(row[3])
             input_data.append([noun, verb, cnt])
-            # input_data.append([noun, verb])
             # tensorでまとめる
             
         label_data = torch.tensor(label_data).long()
@@ -65,9 +65,9 @@ def main():
     input_data, label_data = load_data(word2token)
     dataset = MyDataset(input_data, label_data)
 
-    print(set(label_data))
+    print('分類する助詞:', set(label_data))
     
-    return 0
+    return None
 
 if __name__ == '__main__':
     main()
