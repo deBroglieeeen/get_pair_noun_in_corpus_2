@@ -68,6 +68,7 @@ def train_net(model, train_loader, valid_loader, loss, n_iter, device):
     train_accs = []
     val_accs = []
     optimizer = optim.Adam(model.parameters())
+    optimizer.zero_grad()
     for epoch in range(n_iter):
         running_loss = 0.0
         model = model.to(device)
@@ -93,6 +94,8 @@ def train_net(model, train_loader, valid_loader, loss, n_iter, device):
             # tensorからnumpyに変換
             idx = idx.to('cpu').detach().numpy().copy()
             label = label.to('cpu').detach().numpy().copy()
+            print(idx)
+            print(label)
             # 精度計算
             acc = (idx == label).sum() / len(label)            
             accs.append(acc)

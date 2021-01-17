@@ -14,7 +14,7 @@ device = torch.device('cpu')
 def load_model():
     # 学習済みモデル読み込み
     model = Model()
-    model.load_state_dict(torch.load('model/epoch1.pth', map_location=device))
+    model.load_state_dict(torch.load('model/epoch2.pth', map_location=device))
     return model
 
 def load_testdata():
@@ -43,27 +43,30 @@ def eval(model, test_loader, device):
         _, idx = torch.max(pred, 1)
         
         # tensorからnumpyに変換
-        idx = idx.to('cpu').detach().numpy().copy()
-        label = label.to('cpu').detach().numpy().copy()
+        idx = idx.to('cpu').detach().numpy().copy().tolist()
+        label = label.to('cpu').detach().numpy().copy().tolist()
 
-        idx = idx.tolist()
-        label = label.tolist()
+        print('それぞれの確率の中の最大値のインデックスが予測ラベル:', idx)
+        print('真のラベル:', label)
 
         pred_list += idx 
         label_list += label
+
+        if i == 0:
+            break
     return pred_list, label_list
 
 def main():
     # データロード
     _, val_dataset, _, _ = split_data()
     print('テスト用データ数:', len(val_dataset))
-    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=1000, shuffle=False)
     # モデルロード
     model = load_model()
     # 予測ラベルと真のラベル
     pred_list, label_list = eval(model, val_loader,  device)
 
-    # F1値のマクロ平均出力
+    # # F1値のマクロ平均出力
     f1 = f1_score(label_list, pred_list, average='micro')
     print("F1score:", f1)
     

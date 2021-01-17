@@ -40,6 +40,7 @@ def load_data(word2token):
             # 共起カウント
             cnt = int(row[3])
             input_data.append([noun, verb, cnt])
+            # input_data.append([noun, verb])
             # tensorでまとめる
             
         label_data = torch.tensor(label_data).long()
