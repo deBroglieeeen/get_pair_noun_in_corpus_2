@@ -133,6 +133,7 @@ def main():
     input_data, label_data = load_data(word2token)
     dataset = MyDataset(input_data, label_data)
   
+    # データセット分割
     n_samples = len(dataset)
     val_size = int(n_samples*0.1)
     train_size = n_samples - val_size
