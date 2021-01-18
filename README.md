@@ -13,10 +13,11 @@ Script for getting pair noun in corpus
   位置を表す補語と直前の名詞、位置を表す補語と直後の動詞それぞれの頻度は以下のグラフのようになりました。
   
   ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/, မှာ /hmà/ の各名詞のコーパス総数に対する割合
+  ![alt text](<./output/noun-graph.png>)
   
   
-  
-  ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/, မှာ /hmà/ の各名詞のコーパス総数に対する割合
+  ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/, မှာ /hmà/ の各動詞のコーパス総数に対する割合
+  ![alt text](<./output/verb-graph.png>)
   
 ## 謝辞
   Rの前処理とデータフレームの作成 @ryota.m
