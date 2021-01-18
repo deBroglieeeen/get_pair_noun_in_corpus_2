@@ -1,5 +1,3 @@
-# get_pair_noun_in_corpus
-Script for getting pair noun in corpus 
 # ミャンマー語の位置を表す補語であるတွင် /twìɴ (dwìɴ)/ と　၌ /hnaiʔ/の使い分けについて分析するプロジェクト
 
 ## 要旨
