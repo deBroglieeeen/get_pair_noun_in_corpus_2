@@ -40,7 +40,7 @@ def burmese_chisq_test(data):
         #a = input()
         print(type(row))
         print(row)
-        a = row[0]
+        a = row.value
         dwin_other = 9882 - row.dwin
         hnai_other = 1137 - row.hnai
         print(dwin_other)
