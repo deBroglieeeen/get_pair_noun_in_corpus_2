@@ -20,10 +20,10 @@
   上位15番目までに共起する頻度の多かった名詞と動詞にカイ2乗分析をした。
   
   ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/と各名詞のカイ2乗値のグラフ
-  ![alt text](<./image/verb_chisq.png>)
+  ![alt text](<./image/chisq_noun.png>)
   
   ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/と各動詞のカイ2乗値のグラフ
-  ![alt text](<./image/noun_chisq.png>)
+  ![alt text](<./image/chisq_verb.png>)
   
 ## 謝辞
   Rの前処理とデータフレームの作成 @ryota.m
