@@ -17,6 +17,14 @@
   ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/, မှာ /hmà/ の各動詞のコーパス総数に対する割合
   ![alt text](<./output/verb-graph.png>)
   
+  上位15番目までに共起する頻度の多かった名詞と動詞にカイ2乗分析をした。
+  
+  ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/と各名詞のカイ2乗値のグラフ
+  ![alt text](<./image/verb_chisq.png>)
+  
+  ### ၌ /hnaiʔ/, တွင် /twìɴ (dwìɴ)/と各動詞のカイ2乗値のグラフ
+  ![alt text](<./image/noun_chisq.png>)
+  
 ## 謝辞
   Rの前処理とデータフレームの作成 @ryota.m
   ニューラルネットワークによる助詞分類器の作成　@kent0304
